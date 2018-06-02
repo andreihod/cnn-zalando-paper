@@ -7,9 +7,9 @@ from tensorflow.examples.tutorials.mnist import input_data
 # constantes
 # tamanho das imagens no dataset
 IMG_SIZE       = 28
-LEARNING_RATE  = 0.01
+LEARNING_RATE  = 0.001
 NUM_EPOCHS     = 1000
-MINIBATCH_SIZE = 512
+MINIBATCH_SIZE = 1024
 
 data = input_data.read_data_sets('data/fashion', one_hot=True)
 
@@ -20,11 +20,11 @@ num_minibatches = int(data.train.images.shape[0]/MINIBATCH_SIZE)
 
 # 784 -> 30 -> 15 -> 10
 def initialize_parameters():
-    W1 = tf.get_variable("W1", [30, IMG_SIZE**2], initializer = tf.contrib.layers.xavier_initializer())
-    b1 = tf.get_variable("b1", [30, 1], initializer = tf.zeros_initializer())
-    W2 = tf.get_variable("W2", [15, 30], initializer = tf.contrib.layers.xavier_initializer())
-    b2 = tf.get_variable("b2", [15, 1], initializer = tf.zeros_initializer())
-    W3 = tf.get_variable("W3", [10, 15], initializer = tf.contrib.layers.xavier_initializer())
+    W1 = tf.get_variable("W1", [70, IMG_SIZE**2], initializer = tf.contrib.layers.xavier_initializer())
+    b1 = tf.get_variable("b1", [70, 1], initializer = tf.zeros_initializer())
+    W2 = tf.get_variable("W2", [45, 70], initializer = tf.contrib.layers.xavier_initializer())
+    b2 = tf.get_variable("b2", [45, 1], initializer = tf.zeros_initializer())
+    W3 = tf.get_variable("W3", [10, 45], initializer = tf.contrib.layers.xavier_initializer())
     b3 = tf.get_variable("b3", [10, 1], initializer = tf.zeros_initializer())
 
     return {"W1": W1, "b1": b1, "W2": W2, "b2": b2, "W3": W3, "b3": b3}
@@ -90,3 +90,5 @@ with tf.Session() as sess:
 
     print ("Acuracia do Treino:", accuracy.eval({X: np.transpose(data.train.images), Y: np.transpose(data.train.labels)}))
     print ("Acuracia do Teste:", accuracy.eval({X: np.transpose(data.test.images), Y: np.transpose(data.test.labels)}))
+
+    file_writer = tf.summary.FileWriter('tmp/', sess.graph)
