@@ -20,11 +20,11 @@ num_minibatches = int(data.train.images.shape[0]/MINIBATCH_SIZE)
 
 # 784 -> 30 -> 15 -> 10
 def initialize_parameters():
-    W1 = tf.get_variable("W1", [70, IMG_SIZE**2], initializer = tf.contrib.layers.xavier_initializer())
-    b1 = tf.get_variable("b1", [70, 1], initializer = tf.zeros_initializer())
-    W2 = tf.get_variable("W2", [45, 70], initializer = tf.contrib.layers.xavier_initializer())
-    b2 = tf.get_variable("b2", [45, 1], initializer = tf.zeros_initializer())
-    W3 = tf.get_variable("W3", [10, 45], initializer = tf.contrib.layers.xavier_initializer())
+    W1 = tf.get_variable("W1", [120, IMG_SIZE**2], initializer = tf.contrib.layers.xavier_initializer())
+    b1 = tf.get_variable("b1", [120, 1], initializer = tf.zeros_initializer())
+    W2 = tf.get_variable("W2", [80, 120], initializer = tf.contrib.layers.xavier_initializer())
+    b2 = tf.get_variable("b2", [80, 1], initializer = tf.zeros_initializer())
+    W3 = tf.get_variable("W3", [10, 80], initializer = tf.contrib.layers.xavier_initializer())
     b3 = tf.get_variable("b3", [10, 1], initializer = tf.zeros_initializer())
 
     return {"W1": W1, "b1": b1, "W2": W2, "b2": b2, "W3": W3, "b3": b3}
