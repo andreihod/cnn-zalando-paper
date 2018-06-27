@@ -7,6 +7,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropout
 from keras.metrics import categorical_accuracy
 import tensorflow as tf
+import time
 
 img_rows = 28
 img_cols = 28
@@ -55,9 +56,13 @@ model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adam(),
               metrics=['accuracy'])
 
+start = time.time()
+
 model.fit(x_train, y_train, epochs=epochs, batch_size=batch_size, 
 							callbacks=[tensorboard], validation_data=(x_test, y_test))
 
+end = time.time()
+print('Tempo: ' + str(end - start) + ' segundos')
 print('Avaliando modelo...')
 
 acc_train = model.evaluate(x_train, y_train, verbose=0)
