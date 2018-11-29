@@ -6,6 +6,7 @@ from keras.datasets import fashion_mnist
 from keras.models import Sequential
 from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, Dropout
 from keras.metrics import categorical_accuracy
+from keras.preprocessing.image import ImageDataGenerator
 
 img_rows    = 28
 img_cols    = 28
@@ -34,6 +35,9 @@ x_test = x_test.reshape(x_test.shape[0], img_rows, img_cols, 1)
 x_train = x_train.astype('float32') / 255
 x_test = x_test.astype('float32') / 255
 
+# Data augmentation
+#train_datagen = ImageDataGenerator(zoom_range=0.2, horizontal_flip=True)
+
 y_train = keras.utils.to_categorical(y_train, ncategories)
 y_test = keras.utils.to_categorical(y_test, ncategories)
 
@@ -52,6 +56,33 @@ if model_name == 'cnn-dropout-1':
 	model.add(Dense(84, activation = 'relu', kernel_initializer='he_normal'))
 	model.add(Dropout(0.5))
 	model.add(Dense(ncategories, activation = 'softmax', kernel_initializer='he_normal'))
+if model_name == 'cnn-dropout-2':
+	model.add(Conv2D(filters=6, kernel_size=5, input_shape=(img_rows, img_cols, 1), activation='relu', kernel_initializer='he_normal'))
+	model.add(Conv2D(filters=6, kernel_size=5, activation='relu', kernel_initializer='he_normal'))
+	model.add(MaxPooling2D(strides=2))
+	model.add(Dropout(0.20))
+	model.add(Conv2D(filters=16, kernel_size=5, activation='relu', kernel_initializer='he_normal'))
+	model.add(Conv2D(filters=16, kernel_size=5, activation='relu', kernel_initializer='he_normal'))
+	model.add(MaxPooling2D(strides=2))
+	model.add(Dropout(0.25))
+	model.add(Conv2D(filters=32, kernel_size=5, activation='relu', kernel_initializer='he_normal'))
+	model.add(Dropout(0.25))
+	model.add(Flatten())
+	model.add(Dense(120, activation = 'relu', kernel_initializer='he_normal'))
+	model.add(Dropout(0.5))
+	model.add(Dense(84, activation = 'relu', kernel_initializer='he_normal'))
+	model.add(Dropout(0.5))
+	model.add(Dense(ncategories, activation = 'softmax', kernel_initializer='he_normal'))
+if model_name == 'cnn-simple-1':
+	model.add(Conv2D(filters=6, kernel_size=5, input_shape=(img_rows, img_cols, 1), activation='relu', kernel_initializer='he_normal'))
+	model.add(Conv2D(filters=12, kernel_size=5, activation='relu', kernel_initializer='he_normal'))
+	model.add(MaxPooling2D(strides=2))
+	model.add(Dropout(0.25))
+	model.add(Flatten())
+	model.add(Dense(90, activation = 'relu', kernel_initializer='he_normal'))
+	model.add(Dropout(0.5))
+	model.add(Dense(ncategories, activation = 'softmax', kernel_initializer='he_normal'))
+
 
 model.compile(loss=keras.losses.categorical_crossentropy,
               optimizer=keras.optimizers.Adam(),

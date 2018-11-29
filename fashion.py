@@ -11,7 +11,7 @@ import tensorflow as tf
 (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
 
 tensorboard = keras.callbacks.TensorBoard( 
-	log_dir='./tmp', histogram_freq=10, write_graph=True, 
+	log_dir='./log', histogram_freq=10, write_graph=True, 
 	write_grads=True, write_images=True)
 
 img_size = 28
